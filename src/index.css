@@ -1,0 +1,206 @@
+@import "tailwindcss";
+@import "./theme.css";
+
+@theme inline {
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-soft: var(--brand-soft);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-bg-soft: var(--bg-soft);
+  --color-bg-deep: var(--bg-deep);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Наалттай толгой цэсний доор гарчиг нуугдахаас сэргийлнэ */
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Кирилл толгой үсэг олон тул мөр хоорондын зай бага байвал шахуу харагдана */
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  /*
+   * Гүйлгэх үед гарч ирэх хөдөлгөөн.
+   *
+   * `data-reveal` нь анхнаасаа далд БИШ — JS ажиллахгүй болсон ч агуулга
+   * харагдах ёстой. `<Reveal>` компонент л `data-reveal="hidden"` тавьдаг
+   * тул JS-гүй үед юу ч алга болохгүй.
+   */
+  [data-reveal="hidden"] {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  [data-reveal] {
+    transition:
+      opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* ── Бүртгүүлэх хэсгийн хөдөлгөөн ── */
+
+  /* Арын бүдэг гэрлийн бөмбөлгүүд аажуухан хөвнө */
+  .animate-drift {
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+  .animate-drift-slow {
+    animation: drift 26s ease-in-out infinite alternate-reverse;
+  }
+
+  /* Товч дээгүүр гэрэл гүйнэ */
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      110deg,
+      transparent 30%,
+      rgb(255 255 255 / 0.35) 50%,
+      transparent 70%
+    );
+    transform: translateX(-120%);
+    pointer-events: none;
+  }
+  .shimmer:hover::after {
+    animation: shimmer 0.9s ease;
+  }
+
+  /* Картын хүрээний градиент аажуухан эргэлдэнэ */
+  .glow-border {
+    background: conic-gradient(
+      from var(--glow-angle),
+      rgb(91 91 214 / 0.9),
+      rgb(52 211 153 / 0.6),
+      rgb(167 139 250 / 0.9),
+      rgb(91 91 214 / 0.9)
+    );
+    animation: glow-spin 8s linear infinite;
+  }
+
+  .animate-pop {
+    animation: pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  .animate-fade-up {
+    animation: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .animate-ring {
+    animation: ring 1.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal],
+    [data-reveal="hidden"] {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+
+    .animate-drift,
+    .animate-drift-slow,
+    .shimmer:hover::after,
+    .glow-border,
+    .animate-pop,
+    .animate-fade-up,
+    .animate-ring {
+      animation: none !important;
+    }
+  }
+}
+
+/* Градиентийн өнцгийг хөдөлгөхийн тулд төрлийг нь зарлана */
+@property --glow-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes glow-spin {
+  to {
+    --glow-angle: 360deg;
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(6%, 8%) scale(1.1);
+  }
+  100% {
+    transform: translate(-6%, 4%) scale(0.95);
+  }
+}
+
+@keyframes shimmer {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ring {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+}
