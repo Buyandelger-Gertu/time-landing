@@ -73,7 +73,7 @@ export function MockDashboard() {
         <span className="size-2.5 rounded-full bg-amber-400/70" />
         <span className="size-2.5 rounded-full bg-emerald-400/70" />
         <span className="ml-3 hidden rounded-md bg-white px-3 py-1 text-[11px] text-muted sm:block">
-          app.gertu.mn/dashboard
+          time-dev.gertu.mn/dashboard
         </span>
       </div>
 

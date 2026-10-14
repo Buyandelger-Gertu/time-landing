@@ -9,7 +9,7 @@ export function Pricing() {
       <Reveal>
         <SectionHead
           eyebrow="Үнэ"
-          title="Ажилтны тоогоор, ойлгомжтой"
+          title="Ажилтны тоогоор"
           subtitle={`Нуугдмал төлбөргүй. Эхлээд ${TRIAL_DAYS} хоног үнэгүй туршаад, тохирвол үргэлжлүүлнэ.`}
         />
       </Reveal>

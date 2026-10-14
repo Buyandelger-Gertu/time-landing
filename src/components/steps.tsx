@@ -15,10 +15,7 @@ export function Steps() {
           <h2 className="mt-4 text-3xl font-extrabold sm:text-4xl">
             Гурван алхам, нэг өдөр
           </h2>
-          <p className="mt-4 text-white/60">
-            Дэд бүтэц суулгах, сервер тохируулах шаардлагагүй. Бүртгүүлсэн
-            даруйдаа ажиллаж эхэлнэ.
-          </p>
+       
         </Reveal>
 
         <div className="mt-14 grid gap-6 lg:grid-cols-3">

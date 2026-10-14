@@ -121,6 +121,68 @@
     animation: ring 1.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
   }
 
+  /* ── Системээр аялах (screen-tour.tsx) ── */
+
+  /* Дэлгэц солигдоход: шинэ нь чиглэлийн дагуу гулсаж, бүдгэрэлээс тодорно */
+  .tour-in {
+    animation: tour-in 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .tour-out {
+    animation: tour-out 0.45s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+  .tour-in-y {
+    animation: tour-in-y 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .tour-out-y {
+    animation: tour-out-y 0.45s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+
+  /* Дэлгэц доторх элементүүд `--i` дарааллаар гарч ирнэ */
+  .tour-item {
+    animation: tour-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--i, 0) * 70ms + 180ms);
+  }
+  .tour-bar {
+    transform-origin: bottom;
+    animation: tour-grow-y 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--i, 0) * 60ms + 260ms);
+  }
+  .tour-fill {
+    transform-origin: left;
+    animation: tour-grow-x 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--i, 0) * 70ms + 260ms);
+  }
+
+  /*
+   * Алхмын явцын шугам. Дуусахад нь (`animationend`) дараагийн дэлгэц
+   * рүү шилждэг тул автомат тоглуулалтын цагийг CSS өөрөө барина —
+   * зогсоохдоо `animation-play-state`-ийг л солино.
+   */
+  .tour-progress {
+    transform-origin: left;
+    animation: tour-grow-x var(--tour-duration, 5.5s) linear both;
+  }
+  .tour-paused .tour-progress {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tour-in,
+    .tour-out,
+    .tour-in-y,
+    .tour-out-y,
+    .tour-item,
+    .tour-bar,
+    .tour-fill {
+      animation: none !important;
+    }
+    /* Автоматаар солигдохгүй — хэрэглэгч өөрөө дарж сонгоно */
+    .tour-progress {
+      animation: none !important;
+      transform: scaleX(0);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     [data-reveal],
     [data-reveal="hidden"] {
@@ -202,5 +264,76 @@
   100% {
     opacity: 0;
     transform: scale(1.8);
+  }
+}
+
+@keyframes tour-in {
+  from {
+    opacity: 0;
+    transform: translateX(calc(var(--dir, 1) * 56px)) scale(0.97);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes tour-out {
+  to {
+    opacity: 0;
+    transform: translateX(calc(var(--dir, 1) * -56px)) scale(0.97);
+    filter: blur(8px);
+  }
+}
+
+@keyframes tour-in-y {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--dir, 1) * 40px));
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes tour-out-y {
+  to {
+    opacity: 0;
+    transform: translateY(calc(var(--dir, 1) * -40px));
+    filter: blur(6px);
+  }
+}
+
+@keyframes tour-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes tour-grow-y {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes tour-grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
   }
 }

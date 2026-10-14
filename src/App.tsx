@@ -6,6 +6,7 @@ import { Hero } from "./components/hero";
 import { Modules } from "./components/modules";
 import { Nav } from "./components/nav";
 import { Pricing } from "./components/pricing";
+import { ScreenTour } from "./components/screen-tour";
 import { SignUp } from "./components/signup";
 import { Steps } from "./components/steps";
 
@@ -13,7 +14,7 @@ import { Steps } from "./components/steps";
  * Нэг хуудсан лэндинг.
  *
  * Дараалал нь худалдааны логиктой: юу болохыг хэлээд (Hero) → яаж
- * ажилладгийг үзүүлж (FeatureTabs, Modules, Apps) → эргэлзээг тайлаад
+ * ажилладгийг үзүүлж (FeatureTabs, ScreenTour, Modules, Apps) → эргэлзээг тайлаад
  * (Steps, Pricing, Faq) → үйлдэл рүү (SignUp) хөтөлнө.
  *
  * Router хэрэглээгүй: бүх хэсэг нэг хуудсанд байгаа тул `#id` дагасан
@@ -26,6 +27,7 @@ export default function App() {
       <main>
         <Hero />
         <FeatureTabs />
+        <ScreenTour />
         <Modules />
         <Apps />
         <Steps />
